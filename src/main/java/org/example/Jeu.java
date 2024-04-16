@@ -1,23 +1,25 @@
 package org.example;
 
 public class Jeu implements InterfaceJeu {
-    private Banque banque;
     private boolean ouvert;
+    private Banque banque;
+
 
     public Jeu(Banque labanque) {
-        this.banque = labanque;
         this.ouvert = true;
+        this.banque = labanque;
+
     }
 
     @Override
     public void jouer(Joueur joueur, De de1, De de2) throws JeuFermeException, DebitImpossibleException {
-        if (!ouvert) {
-            throw new JeuFermeException("Le jeu est fermé.");
-        }
-
         if (!banque.est_solvable()) {
             ouvert = false;
             throw new JeuFermeException("La banque n'est plus solvable.");
+        }
+
+        if (!ouvert) {
+            throw new JeuFermeException("Le jeu est fermé.");
         }
 
         int sommeDes = de1.lancer() + de2.lancer();
@@ -33,14 +35,14 @@ public class Jeu implements InterfaceJeu {
             joueur.debiter(joueur.mise());
         }
     }
-
+    @Override
+    public boolean estOuvert() {
+        return ouvert;
+    }
     @Override
     public void fermer() {
         ouvert = false;
     }
 
-    @Override
-    public boolean estOuvert() {
-        return ouvert;
-    }
+
 }
