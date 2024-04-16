@@ -1,7 +1,7 @@
 package org.example;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class JeuTest {
 
