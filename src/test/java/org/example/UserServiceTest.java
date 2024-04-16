@@ -1,12 +1,13 @@
 package org.example;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.junit.runner.RunWith;
+
 @RunWith(MockitoJUnitRunner.class)
 
 public class UserServiceTest {
@@ -44,14 +45,6 @@ public class UserServiceTest {
         verify(utilisateurApiMock).creerUtilisateur(utilisateur);
     }
     @Test
-    public void testCreerUtilisateur_ErreurValidation() throws ServiceException {
-        Utilisateur utilisateur = new Utilisateur(null, null, null);
-        doNothing().when(utilisateurApiMock).creerUtilisateur(utilisateur);
-        UserService userService = new UserService(utilisateurApiMock);
-        userService.creerUtilisateur(utilisateur);
-        verify(utilisateurApiMock, never()).creerUtilisateur(utilisateur);
-    }
-    @Test
     public void testCreerUtilisateur_withReturn() throws ServiceException {
         Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
         when(utilisateurApiMock.creerUtilisateurReturnBoolean(utilisateur)).thenReturn(true);
@@ -65,6 +58,15 @@ public class UserServiceTest {
         assertEquals(idUtilisateur, utilisateurId);
 
     }
+    @Test
+    public void testCreerUtilisateur_ErreurValidation() throws ServiceException {
+        Utilisateur utilisateur = new Utilisateur(null, null, null);
+        doNothing().when(utilisateurApiMock).creerUtilisateur(utilisateur);
+        UserService userService = new UserService(utilisateurApiMock);
+        userService.creerUtilisateur(utilisateur);
+        verify(utilisateurApiMock, never()).creerUtilisateur(utilisateur);
+    }
+
     @Captor
     private ArgumentCaptor<Utilisateur> argumentCaptor;
 

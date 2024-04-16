@@ -1,7 +1,8 @@
 package org.example;
+import org.junit.Test;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.Test;
+
 public class JeuTest {
 
     @Test
@@ -14,6 +15,20 @@ public class JeuTest {
         jeu.fermer();
         assertThrows(JeuFermeException.class, () -> jeu.jouer(joueur_M, Mock1, Mock2));
     }
+    @Test
+    public void testBanqueInsolvableApresGain() throws JeuFermeException, DebitImpossibleException {
+        // Arrange
+        Banque banque = new BanqueImt(15, 20);
+        Joueur joueur = mock(Joueur.class);
+        when(joueur.mise()).thenReturn(10);
+        InterfaceJeu jeu = new Jeu(banque);
+        De de1 = mock(De.class);
+        De de2 = mock(De.class);
+        when(de1.lancer()).thenReturn(3);
+        when(de2.lancer()).thenReturn(4);
+        assertThrows(JeuFermeException.class, () -> jeu.jouer(joueur, de1, de2));
+    }
+
     @Test
     public void testJoueurInsolvable() throws JeuFermeException, DebitImpossibleException {
         Banque banqueMock = mock(Banque.class);
@@ -32,19 +47,6 @@ public class JeuTest {
         verify(Mock2, never()).lancer();
     }
 
-    @Test
-    public void testBanqueInsolvableApresGain() throws JeuFermeException, DebitImpossibleException {
-        // Arrange
-        Banque banque = new BanqueImt(15, 20);
-        Joueur joueur = mock(Joueur.class);
-        when(joueur.mise()).thenReturn(10);
-        InterfaceJeu jeu = new Jeu(banque);
-        De de1 = mock(De.class);
-        De de2 = mock(De.class);
-        when(de1.lancer()).thenReturn(3);
-        when(de2.lancer()).thenReturn(4);
-        assertThrows(JeuFermeException.class, () -> jeu.jouer(joueur, de1, de2));
-    }
 
 
 }

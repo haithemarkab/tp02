@@ -1,6 +1,6 @@
 package org.example;
-import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.Mockito.*;
 import org.junit.Test;
