@@ -14,7 +14,7 @@ public class UserServiceTest {
     @Mock
     private UtilisateurApi utilisateurApiMock;
     @Test
-    public void testCreerUtilisateur() throws ServiceException {
+    public void test_creé_user() throws ServiceException {
 //TODO Création d'un nouvel utilisateur
         Utilisateur utilisateur = new Utilisateur("Jean", "Dupont",
                 "jeandupont@email.com");
@@ -33,7 +33,7 @@ public class UserServiceTest {
         verify(utilisateurApiMock).creerUtilisateur(utilisateur);
     }
     @Test
-    public void testCreerUtilisateurAvecException() throws ServiceException {
+    public void test_creé_user_avec_exception() throws ServiceException {
 
         Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
         ServiceException serviceException = new ServiceException("Echec de la création de l'utilisateur");
@@ -45,7 +45,7 @@ public class UserServiceTest {
         verify(utilisateurApiMock).creerUtilisateur(utilisateur);
     }
     @Test
-    public void testCreerUtilisateur_withReturn() throws ServiceException {
+    public void test_creé_user_avec_return() throws ServiceException {
         Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
         when(utilisateurApiMock.creerUtilisateurReturnBoolean(utilisateur)).thenReturn(true);
         int idUtilisateur = 123;
@@ -58,20 +58,13 @@ public class UserServiceTest {
         assertEquals(idUtilisateur, utilisateurId);
 
     }
-    @Test
-    public void testCreerUtilisateur_ErreurValidation() throws ServiceException {
-        Utilisateur utilisateur = new Utilisateur(null, null, null);
-        doNothing().when(utilisateurApiMock).creerUtilisateur(utilisateur);
-        UserService userService = new UserService(utilisateurApiMock);
-        userService.creerUtilisateur(utilisateur);
-        verify(utilisateurApiMock, never()).creerUtilisateur(utilisateur);
-    }
+
 
     @Captor
     private ArgumentCaptor<Utilisateur> argumentCaptor;
 
     @Test
-    public void testCreerUtilisateur_withCapture() throws ServiceException {
+    public void test_creé_user_avec_captur() throws ServiceException {
         Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
         when(utilisateurApiMock.creerUtilisateurReturnBoolean(any(Utilisateur.class))).thenReturn(true);
         UserService userService = new UserService(utilisateurApiMock);
@@ -82,5 +75,13 @@ public class UserServiceTest {
         assertEquals("Jean", utilisateurCapture.getFirstName());
         assertEquals("Dupont", utilisateurCapture.getLastName());
         assertEquals("jeandupont@email.com", utilisateurCapture.getEmail());
+    }
+    @Test
+    public void test_creé_user_error_validation() throws ServiceException {
+        Utilisateur utilisateur = new Utilisateur(null, null, null);
+        doNothing().when(utilisateurApiMock).creerUtilisateur(utilisateur);
+        UserService userService = new UserService(utilisateurApiMock);
+        userService.creerUtilisateur(utilisateur);
+        verify(utilisateurApiMock, never()).creerUtilisateur(utilisateur);
     }
 }

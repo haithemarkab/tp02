@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 public class JeuTest {
 
     @Test
-    public void testJeuFerme() {
+    public void testJeu() {
         Banque Banque_M= mock(Banque.class);
         InterfaceJeu jeu = new Jeu(Banque_M);
         Joueur joueur_M = mock(Joueur.class);
@@ -16,7 +16,7 @@ public class JeuTest {
         assertThrows(JeuFermeException.class, () -> jeu.jouer(joueur_M, Mock1, Mock2));
     }
     @Test
-    public void testBanqueInsolvableApresGain() throws JeuFermeException, DebitImpossibleException {
+    public void test_banque_insolvable_aprés_gain() throws JeuFermeException, DebitImpossibleException {
         // Arrange
         Banque banque = new BanqueImt(15, 20);
         Joueur joueur = mock(Joueur.class);
@@ -30,7 +30,7 @@ public class JeuTest {
     }
 
     @Test
-    public void testJoueurInsolvable() throws JeuFermeException, DebitImpossibleException {
+    public void test_joueur_insolvable() throws JeuFermeException, DebitImpossibleException {
         Banque banqueMock = mock(Banque.class);
         when(banqueMock.est_solvable()).thenReturn(true);
         Joueur joueurMock = mock(Joueur.class);
